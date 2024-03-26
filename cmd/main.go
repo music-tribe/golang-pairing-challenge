@@ -20,5 +20,5 @@ func main() {
 	}
 
 	svc := service.NewService(db, store)
-	log.Fatal(svc.Run())
+	log.Fatal(svc.Run("8080"))
 }

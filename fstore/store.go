@@ -1,10 +1,10 @@
 package fstore
 
 import (
-	"bytes"
 	"io"
 	"os"
 	"path"
+	"path/filepath"
 )
 
 type Store struct {
@@ -12,21 +12,24 @@ type Store struct {
 }
 
 func NewStore(dir string) (*Store, error) {
-	if err := os.MkdirAll(dir, 0755); err != nil {
-		return nil, err
-	}
-
 	return &Store{
 		dir: dir,
 	}, nil
 }
 
-func (s *Store) SaveFile(filepath string, file io.Reader) error {
-	buf := bytes.NewBuffer([]byte{})
+func (s *Store) SaveFile(key string, value io.Reader) error {
+	fullpath := path.Join(s.dir, key)
 
-	if _, err := io.Copy(buf, file); err != nil {
+	if err := os.MkdirAll(filepath.Dir(fullpath), 0770); err != nil && err != io.EOF {
 		return err
 	}
 
-	return os.WriteFile(path.Join(s.dir, filepath), buf.Bytes(), 0644)
+	file, err := os.Create(fullpath)
+	if err != nil {
+		return err
+	}
+
+	_, err = io.Copy(file, value)
+
+	return err
 }

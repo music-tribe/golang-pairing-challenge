@@ -1,6 +1,7 @@
 package service
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -24,6 +25,15 @@ func NewService(database Database, store Store) *Service {
 	return svc
 }
 
-func (s *Service) Run() error {
-	return http.ListenAndServe(":8080", s.router)
+func (s *Service) Run(port string) error {
+	errChan := make(chan error, 1)
+
+	go func() {
+		defer close(errChan)
+		errChan <- http.ListenAndServe(":"+port, s.router)
+	}()
+
+	log.Println("Server is running on port:", port)
+
+	return <-errChan
 }

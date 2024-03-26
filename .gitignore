@@ -1,0 +1,4 @@
+cmd/my.db
+.vscode/launch.json
+
+**/tmp/*
