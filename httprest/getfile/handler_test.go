@@ -9,7 +9,7 @@ import (
 
 	"github.com/golang/mock/gomock"
 	"github.com/gorilla/mux"
-	"github.com/music-tribe/golang-pairing-challenge/service/mocksvc"
+	"github.com/music-tribe/golang-pairing-challenge/core/service/mocksvc"
 	"github.com/music-tribe/uuid"
 	"github.com/stretchr/testify/assert"
 )

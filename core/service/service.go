@@ -3,8 +3,8 @@ package service
 import (
 	"io"
 
-	"github.com/music-tribe/golang-pairing-challenge/ports"
-	"github.com/music-tribe/golang-pairing-challenge/service/getfile"
+	"github.com/music-tribe/golang-pairing-challenge/core/ports"
+	"github.com/music-tribe/golang-pairing-challenge/core/service/getfile"
 )
 
 type Service struct {

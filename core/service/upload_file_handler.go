@@ -9,7 +9,7 @@ import (
 
 	"github.com/gabriel-vasile/mimetype"
 	"github.com/gorilla/mux"
-	"github.com/music-tribe/golang-pairing-challenge/domain"
+	"github.com/music-tribe/golang-pairing-challenge/core/domain"
 	"github.com/music-tribe/uuid"
 )
 

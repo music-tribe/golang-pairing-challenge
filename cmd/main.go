@@ -3,10 +3,10 @@ package main
 import (
 	"log"
 
+	"github.com/music-tribe/golang-pairing-challenge/core/service"
 	"github.com/music-tribe/golang-pairing-challenge/httprest"
 	"github.com/music-tribe/golang-pairing-challenge/internal/boltdb"
 	"github.com/music-tribe/golang-pairing-challenge/internal/fstore"
-	"github.com/music-tribe/golang-pairing-challenge/service"
 )
 
 func main() {

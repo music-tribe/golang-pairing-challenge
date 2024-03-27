@@ -5,8 +5,8 @@ import (
 	"log"
 
 	"github.com/boltdb/bolt"
-	"github.com/music-tribe/golang-pairing-challenge/domain"
-	"github.com/music-tribe/golang-pairing-challenge/ports"
+	"github.com/music-tribe/golang-pairing-challenge/core/domain"
+	"github.com/music-tribe/golang-pairing-challenge/core/ports"
 	"github.com/music-tribe/uuid"
 )
 

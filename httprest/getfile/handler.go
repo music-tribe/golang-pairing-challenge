@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
-	"github.com/music-tribe/golang-pairing-challenge/ports"
+	"github.com/music-tribe/golang-pairing-challenge/core/ports"
 	"github.com/music-tribe/uuid"
 )
 

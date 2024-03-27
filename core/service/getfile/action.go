@@ -3,7 +3,7 @@ package getfile
 import (
 	"io"
 
-	"github.com/music-tribe/golang-pairing-challenge/ports"
+	"github.com/music-tribe/golang-pairing-challenge/core/ports"
 )
 
 func Action(db ports.Database, st ports.Store, req ports.GetFileRequest) (io.ReadCloser, error) {

@@ -5,8 +5,8 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
+	"github.com/music-tribe/golang-pairing-challenge/core/ports"
 	"github.com/music-tribe/golang-pairing-challenge/httprest/getfile"
-	"github.com/music-tribe/golang-pairing-challenge/ports"
 )
 
 type API struct {
