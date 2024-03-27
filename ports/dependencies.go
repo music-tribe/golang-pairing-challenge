@@ -1,6 +1,7 @@
 package ports
 
 import (
+	"errors"
 	"io"
 
 	"github.com/music-tribe/golang-pairing-challenge/domain"
@@ -15,5 +16,9 @@ type Store interface {
 
 type Database interface {
 	Insert(sf *domain.ShowFile) error
-	Fetch(id uuid.UUID) (domain.ShowFile, error)
+	Fetch(id uuid.UUID) (*domain.ShowFile, error)
 }
+
+var (
+	ErrNotFound = errors.New("not found")
+)
