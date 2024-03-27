@@ -1,7 +1,10 @@
 package service
 
 import (
+	"io"
+
 	"github.com/music-tribe/golang-pairing-challenge/ports"
+	"github.com/music-tribe/golang-pairing-challenge/service/getfile"
 )
 
 type Service struct {
@@ -16,4 +19,8 @@ func NewService(database ports.Database, store ports.Store) *Service {
 	}
 
 	return svc
+}
+
+func (s *Service) GetFile(req ports.GetFileRequest) (io.ReadCloser, error) {
+	return getfile.Action(s.database, s.store, req)
 }
