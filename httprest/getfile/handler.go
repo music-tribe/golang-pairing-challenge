@@ -55,10 +55,10 @@ func bindRequest(vars map[string]string, req *Request) (err error) {
 }
 
 func sendResponse(w http.ResponseWriter, file io.Reader) error {
+	w.WriteHeader(http.StatusOK)
 	if _, err := io.Copy(w, file); err != nil {
 		return err
 	}
 
-	w.WriteHeader(http.StatusOK)
 	return nil
 }
