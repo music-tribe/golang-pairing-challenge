@@ -1,4 +1,9 @@
-cmd/my.db
+**/my.db
 .vscode/launch.json
 
+# Ignore the temp files
 **/tmp/*
+
+# Ignore all generated mocks
+**/mock*
+**/__debug_*

@@ -2,19 +2,25 @@ package service
 
 import (
 	"bytes"
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"strings"
 
 	"github.com/gabriel-vasile/mimetype"
 	"github.com/gorilla/mux"
-	"github.com/music-tribe/golang-pairing-challenge/domain"
+	"github.com/music-tribe/golang-pairing-challenge/core/domain"
 	"github.com/music-tribe/uuid"
 )
 
 type Request struct {
 	UserId uuid.UUID
 	Id     uuid.UUID
+}
+
+type Response struct {
+	Id       uuid.UUID `json:"id"`
+	Filepath string    `json:"filepath"`
 }
 
 func (s *Service) UploadFile(w http.ResponseWriter, r *http.Request) {
@@ -48,7 +54,7 @@ func (s *Service) UploadFile(w http.ResponseWriter, r *http.Request) {
 	}
 	id := uuid.New()
 
-	// snif the file content type
+	// sniff the file content type
 	headSize := 1024
 	head := make([]byte, headSize)
 	bytesRead, err := file.Read(head)
@@ -81,17 +87,32 @@ func (s *Service) UploadFile(w http.ResponseWriter, r *http.Request) {
 
 	// Save the file metadata
 	if err = s.database.Insert(&domain.ShowFile{
-		Id:           id,
-		UserId:       userId,
-		ContenctType: contentType.String(),
-		Filename:     fileHeader.Filename,
-		Size:         fileHeader.Size,
-		Filepath:     filepath,
+		Id:          id,
+		UserId:      userId,
+		ContentType: contentType.String(),
+		Filename:    fileHeader.Filename,
+		Size:        fileHeader.Size,
+		Filepath:    filepath,
 	}); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
-	// Respond with success
+	// send the response
+	resp := Response{
+		Id:       id,
+		Filepath: filepath,
+	}
+
+	byt, err := json.MarshalIndent(resp, "", "  ")
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
 	w.WriteHeader(http.StatusOK)
+	if _, err := w.Write(byt); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 }

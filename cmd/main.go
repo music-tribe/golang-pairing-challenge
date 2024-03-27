@@ -3,9 +3,10 @@ package main
 import (
 	"log"
 
-	"github.com/music-tribe/golang-pairing-challenge/boltdb"
-	"github.com/music-tribe/golang-pairing-challenge/fstore"
-	"github.com/music-tribe/golang-pairing-challenge/service"
+	"github.com/music-tribe/golang-pairing-challenge/core/service"
+	"github.com/music-tribe/golang-pairing-challenge/httprest"
+	"github.com/music-tribe/golang-pairing-challenge/internal/boltdb"
+	"github.com/music-tribe/golang-pairing-challenge/internal/fstore"
 )
 
 func main() {
@@ -20,5 +21,7 @@ func main() {
 	}
 
 	svc := service.NewService(db, store)
-	log.Fatal(svc.Run("8080"))
+	api := httprest.NewAPI(svc)
+
+	log.Fatal(api.Run("8080"))
 }

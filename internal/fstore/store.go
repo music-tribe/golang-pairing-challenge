@@ -33,3 +33,14 @@ func (s *Store) SaveFile(key string, value io.Reader) error {
 
 	return err
 }
+
+func (s *Store) GetFile(key string) (io.ReadCloser, error) {
+	fullpath := path.Join(s.dir, key)
+
+	file, err := os.Open(fullpath)
+	if err != nil {
+		return nil, err
+	}
+
+	return file, nil
+}
