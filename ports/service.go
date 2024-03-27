@@ -20,3 +20,7 @@ type GetFileRequest struct {
 	Id     uuid.UUID `validate:"required"`
 	UserId uuid.UUID `validate:"required"`
 }
+
+type UploadFileRequest struct {
+	// TODO: refactor me!!!
+}
