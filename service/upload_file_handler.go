@@ -2,6 +2,7 @@ package service
 
 import (
 	"bytes"
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"strings"
@@ -15,6 +16,11 @@ import (
 type Request struct {
 	UserId uuid.UUID
 	Id     uuid.UUID
+}
+
+type Response struct {
+	Id       uuid.UUID `json:"id"`
+	Filepath string    `json:"filepath"`
 }
 
 func (s *Service) UploadFile(w http.ResponseWriter, r *http.Request) {
@@ -92,6 +98,21 @@ func (s *Service) UploadFile(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Respond with success
+	// send the response
+	resp := Response{
+		Id:       id,
+		Filepath: filepath,
+	}
+
+	byt, err := json.MarshalIndent(resp, "", "  ")
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
 	w.WriteHeader(http.StatusOK)
+	if _, err := w.Write(byt); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 }
