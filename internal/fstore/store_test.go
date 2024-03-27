@@ -3,6 +3,7 @@ package fstore
 import (
 	"bytes"
 	"io"
+	"os"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -11,7 +12,8 @@ import (
 
 func TestStore(t *testing.T) {
 	t.Run("test store lifecycle", func(t *testing.T) {
-		store, err := NewStore("./tmp")
+		dir := os.TempDir()
+		store, err := NewStore(dir)
 		if err != nil {
 			t.Fatal(err)
 		}
