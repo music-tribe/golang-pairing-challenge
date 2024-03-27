@@ -54,7 +54,7 @@ func (s *Service) UploadFile(w http.ResponseWriter, r *http.Request) {
 	}
 	id := uuid.New()
 
-	// snif the file content type
+	// sniff the file content type
 	headSize := 1024
 	head := make([]byte, headSize)
 	bytesRead, err := file.Read(head)
