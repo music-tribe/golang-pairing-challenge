@@ -87,12 +87,12 @@ func (s *Service) UploadFile(w http.ResponseWriter, r *http.Request) {
 
 	// Save the file metadata
 	if err = s.database.Insert(&domain.ShowFile{
-		Id:           id,
-		UserId:       userId,
-		ContenctType: contentType.String(),
-		Filename:     fileHeader.Filename,
-		Size:         fileHeader.Size,
-		Filepath:     filepath,
+		Id:          id,
+		UserId:      userId,
+		ContentType: contentType.String(),
+		Filename:    fileHeader.Filename,
+		Size:        fileHeader.Size,
+		Filepath:    filepath,
 	}); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
