@@ -6,3 +6,4 @@
 
 # Ignore all generated mocks
 **/mock*
+**/__debug_*
