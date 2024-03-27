@@ -1,4 +1,4 @@
-cmd/my.db
+**/my.db
 .vscode/launch.json
 
 # Ignore the temp files

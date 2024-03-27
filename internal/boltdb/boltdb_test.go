@@ -1,6 +1,7 @@
 package boltdb
 
 import (
+	"os"
 	"testing"
 
 	"github.com/music-tribe/golang-pairing-challenge/domain"
@@ -17,6 +18,9 @@ func TestDatabase(t *testing.T) {
 		}
 
 		t.Cleanup(func() {
+			err = os.RemoveAll(db.session.Path())
+			require.NoError(t, err)
+
 			err := db.session.Close()
 			assert.NoError(t, err)
 		})
