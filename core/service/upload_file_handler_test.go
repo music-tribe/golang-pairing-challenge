@@ -20,6 +20,9 @@ import (
 )
 
 func TestService_UploadFile(t *testing.T) {
+	testByt, err := os.ReadFile("./testFile/testImage.png")
+	require.NoError(t, err)
+
 	t.Run("Approval test for UploadFile - covers only the happy path", func(t *testing.T) {
 		// prepare dependencies
 		ctrl := gomock.NewController(t)
@@ -47,10 +50,9 @@ func TestService_UploadFile(t *testing.T) {
 		// init mulitpart form data
 		body := bytes.NewBuffer(nil)
 		mpw := multipart.NewWriter(body)
-		testData := []byte("test data")
-		fw, err := mpw.CreateFormFile("file", "test.txt")
+		fw, err := mpw.CreateFormFile("file", "testimage.png")
 		require.NoError(t, err)
-		_, err = fw.Write(testData)
+		_, err = fw.Write(testByt)
 		require.NoError(t, err)
 		err = mpw.Close()
 		require.NoError(t, err)
@@ -75,6 +77,6 @@ func TestService_UploadFile(t *testing.T) {
 		// check file content
 		byt, err := os.ReadFile(filepath.Join(dir, resp.Filepath))
 		require.NoError(t, err)
-		assert.Equal(t, testData, byt)
+		assert.Equal(t, testByt, byt)
 	})
 }

@@ -2,7 +2,7 @@ package domain
 
 import "github.com/music-tribe/uuid"
 
-type ShowFile struct {
+type ImageFile struct {
 	Id          uuid.UUID `json:"id"`
 	UserId      uuid.UUID `json:"user_id"`
 	Filename    string    `json:"filename"`

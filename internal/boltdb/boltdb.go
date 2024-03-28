@@ -27,7 +27,7 @@ func NewDatabase() (*Database, error) {
 	}, nil
 }
 
-func (d *Database) Insert(sf *domain.ShowFile) error {
+func (d *Database) Insert(sf *domain.ImageFile) error {
 	byt, err := json.Marshal(sf)
 	if err != nil {
 		return err
@@ -43,8 +43,8 @@ func (d *Database) Insert(sf *domain.ShowFile) error {
 	})
 }
 
-func (d *Database) Fetch(id uuid.UUID) (*domain.ShowFile, error) {
-	var sf domain.ShowFile
+func (d *Database) Fetch(id uuid.UUID) (*domain.ImageFile, error) {
+	var sf domain.ImageFile
 	err := d.session.View(func(tx *bolt.Tx) error {
 		bucket := tx.Bucket([]byte(bucketName))
 		if bucket == nil {

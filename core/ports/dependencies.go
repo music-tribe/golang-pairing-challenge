@@ -15,8 +15,8 @@ type Store interface {
 }
 
 type Database interface {
-	Insert(sf *domain.ShowFile) error
-	Fetch(id uuid.UUID) (*domain.ShowFile, error)
+	Insert(sf *domain.ImageFile) error
+	Fetch(id uuid.UUID) (*domain.ImageFile, error)
 }
 
 var (

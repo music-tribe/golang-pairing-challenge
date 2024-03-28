@@ -25,7 +25,7 @@ func TestDatabase(t *testing.T) {
 			assert.NoError(t, err)
 		})
 
-		expect := &domain.ShowFile{
+		expect := &domain.ImageFile{
 			Id:     uuid.New(),
 			UserId: uuid.New(),
 		}

@@ -13,6 +13,15 @@ import (
 	"github.com/music-tribe/uuid"
 )
 
+var (
+	whitelist = []string{
+		"image/jpeg",
+		"image/png",
+		"image/gif",
+		"image/bmp",
+	}
+)
+
 type Request struct {
 	UserId uuid.UUID
 	Id     uuid.UUID
@@ -70,6 +79,20 @@ func (s *Service) UploadFile(w http.ResponseWriter, r *http.Request) {
 
 	contentType := mimetype.Detect(head[:bytesRead])
 
+	// check if the file type is allowed
+	// TODO: how would we whitelist the contents of a gzip file?
+	var allowed bool
+	for _, allowedType := range whitelist {
+		if contentType.Is(allowedType) {
+			allowed = true
+		}
+	}
+
+	if !allowed {
+		http.Error(w, "file type not allowed", http.StatusBadRequest)
+		return
+	}
+
 	// create the filepath
 	filepath := fmt.Sprintf("%s/%s/%s", userId, id, fileHeader.Filename)
 
@@ -80,7 +103,7 @@ func (s *Service) UploadFile(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Save the file metadata
-	if err = s.database.Insert(&domain.ShowFile{
+	if err = s.database.Insert(&domain.ImageFile{
 		Id:          id,
 		UserId:      userId,
 		ContentType: contentType.String(),
