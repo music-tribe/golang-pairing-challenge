@@ -70,12 +70,6 @@ func (s *Service) UploadFile(w http.ResponseWriter, r *http.Request) {
 
 	contentType := mimetype.Detect(head[:bytesRead])
 
-	// TODO: we should remove this as part of the test
-	if _, err := file.Seek(0, 0); err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-
 	// create the filepath
 	filepath := fmt.Sprintf("%s/%s/%s", userId, id, fileHeader.Filename)
 
